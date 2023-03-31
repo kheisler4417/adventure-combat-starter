@@ -36,28 +36,51 @@ class Player extends Character {
   }
 
   takeItem(itemName) {
-
-    // Fill this in
-
+    const item = this.currentRoom.getItemByName(itemName);
+    if (item) {
+      this.items.push(item);
+      this.currentRoom.items = this.currentRoom.items.filter(roomItem => roomItem.name.toLowerCase() !== itemName.toLowerCase());
+    } else {
+      console.log(`There is no ${itemName} here.`);
+    }
   }
+
 
   dropItem(itemName) {
-
-    // Fill this in
-
+    const item = this.getItemByName(itemName);
+    if (item) {
+      this.currentRoom.items.push(item);
+      this.items = this.items.filter(playerItem => playerItem.name.toLowerCase() !== itemName.toLowerCase());
+    } else {
+      console.log(`You are not carrying ${itemName}.`);
+    }
   }
+
 
   eatItem(itemName) {
-
-    // Fill this in
-
+    const item = this.getItemByName(itemName);
+    if (item) {
+      if (item instanceof Food) {
+        console.log(`You eat the ${itemName}.`);
+        this.items = this.items.filter(playerItem => playerItem.name.toLowerCase() !== itemName.toLowerCase());
+      } else {
+        console.log(`You cannot eat ${itemName}.`);
+      }
+    } else {
+      console.log(`You are not carrying ${itemName}.`);
+    }
   }
+
 
   getItemByName(name) {
-
-    // Fill this in
-
+    for (const item of this.items) {
+      if (item.name.toLowerCase() === name.toLowerCase()) {
+        return item;
+      }
+    }
+    return undefined;
   }
+
 
   hit(targetName) {
     const enemy = this.currentRoom.getEnemyByName(targetName);
