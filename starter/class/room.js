@@ -5,6 +5,7 @@ class Room {
     this.description = description;
     this.exits = {};
     this.items = [];
+    this.enemies = [];
   }
 
   getEnemies() {
@@ -58,8 +59,14 @@ class Room {
   }
 
   getEnemyByName(name) {
-
-    // Fill this in
+    const enemies = this.getEnemies(); // Get the list of enemies using getEnemies() method
+    for (const enemy of enemies) {
+      if (enemy.name.toLowerCase() === name.toLowerCase()) {
+        return enemy;
+      }
+    }
+    return undefined;
+  }
 
 }
 

@@ -1,6 +1,8 @@
-const {Character} = require('./character');
-const {Enemy} = require('./enemy');
-const {Food} = require('./food');
+const { Character } = require('./character');
+const { Enemy } = require('./enemy');
+const { Food } = require('./food');
+const { Room } = require('./room');
+
 
 class Player extends Character {
 
@@ -27,7 +29,7 @@ class Player extends Character {
       console.log(`${this.name} is not carrying anything.`);
     } else {
       console.log(`${this.name} is carrying:`);
-      for (let i = 0 ; i < this.items.length ; i++) {
+      for (let i = 0; i < this.items.length; i++) {
         console.log(`  ${this.items[i].name}`);
       }
     }
@@ -57,10 +59,17 @@ class Player extends Character {
 
   }
 
-  hit(name) {
+  hit(targetName) {
+    const enemy = this.currentRoom.getEnemyByName(targetName);
+    if (enemy) {
+      const damage = 10; // Define the damage amount as needed.
+      enemy.applyDamage(damage);
+      enemy.attackTarget = this; // Set the enemy's attackTarget to the player who hit it.
 
-    // Fill this in
-
+      console.log(`${this.name} hits ${enemy.name} for ${damage} damage.`);
+    } else {
+      console.log(`There is no ${targetName} here.`);
+    }
   }
 
   die() {
